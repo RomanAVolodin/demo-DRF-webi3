@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets
 
 from profiles_api import serializers
 
@@ -35,3 +35,36 @@ class HelloApiView(APIView):
 
     def delete(self, request, pk=None):
         return Response({'method': 'DELETE'})
+
+
+class HelloViewSet(viewsets.ViewSet):
+    serializer_class = serializers.HelloSerializer
+
+    def list(self, request):
+        a_viewset = [
+            'Uses actions list, create, retrieve, update, partial_update, destroy',
+            'https://www.django-rest-framework.org/api-guide/viewsets/#viewset-actions',
+            'Maps maps to URL using Routers',
+        ]
+
+        return Response({'message': 'Hello', 'an_apiview': a_viewset})
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            message = f'Hello {name}'
+            return Response({'message': message})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        return Response({'method': f'GET {pk}'})
+
+    def update(self, request, pk=None):
+        return Response({'method': f'PUT {pk}'})
+
+    def partial_update(self, request, pk=None):
+        return Response({'method': f'PATCH {pk}'})
+
+    def destroy(self, request, pk=None):
+        return Response({'method': f'DELETE {pk}'})
