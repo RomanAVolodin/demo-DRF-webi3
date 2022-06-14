@@ -4,6 +4,7 @@ from django.db import models
 
 class UserProfileManager(BaseUserManager):
     """Manager for our custom user"""
+
     def create_user(self, email, name, password=None):
         if not email:
             raise ValueError('Email should be provided')
@@ -27,6 +28,7 @@ class UserProfileManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Custom user model"""
+
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
@@ -45,4 +47,3 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-

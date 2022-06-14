@@ -1,8 +1,14 @@
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets
+from rest_framework.viewsets import ModelViewSet
 
 from profiles_api import serializers
+from profiles_api.models import UserProfile
+from profiles_api.permissions import UpdateOwnProfile
+from profiles_api.serializers import UserProfileSerializer
 
 
 class HelloApiView(APIView):
@@ -47,7 +53,7 @@ class HelloViewSet(viewsets.ViewSet):
             'Maps maps to URL using Routers',
         ]
 
-        return Response({'message': 'Hello', 'an_apiview': a_viewset})
+        return Response(a_viewset)
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -68,3 +74,10 @@ class HelloViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         return Response({'method': f'DELETE {pk}'})
+
+
+class UserProfileViewSet(ModelViewSet):
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (UpdateOwnProfile,)
