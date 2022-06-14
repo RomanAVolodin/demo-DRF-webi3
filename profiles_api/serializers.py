@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import Serializer, ModelSerializer
 
-from profiles_api.models import UserProfile
+from profiles_api.models import UserProfile, ProfileFeedItem
 
 
 class HelloSerializer(Serializer):
@@ -9,7 +9,7 @@ class HelloSerializer(Serializer):
 
 
 class UserProfileSerializer(ModelSerializer):
-    """Serialises UserProfile model"""
+    """Serializes UserProfile model"""
 
     class Meta:
         model = UserProfile
@@ -21,3 +21,14 @@ class UserProfileSerializer(ModelSerializer):
             email=validated_data['email'], name=validated_data['name'], password=validated_data['password']
         )
         return user
+
+
+class ProfileFeedItemSerializer(ModelSerializer):
+    """Serializes ProfileFeedItem model"""
+    # user_profile = UserProfileSerializer()
+
+    class Meta:
+        model = ProfileFeedItem
+        fields = ('id', 'user_profile', 'status_text', 'created_on')
+        read_only_fields = ('user_profile',)
+
