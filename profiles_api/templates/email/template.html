@@ -1,0 +1,140 @@
+{% extends "email/base.tpl" %}
+{% block html %}
+
+<body bgcolor="#f7f9fa">
+
+    <table border="0" cellpadding="0" cellspacing="0" class="full-wrap" style="line-height: normal;" width="100%">
+        <tbody>
+        <tr>
+            <td align="center" bgcolor="#f2f2f2"><!--[if (gte mso 9)|(IE)]>
+                <table width="620" border="0" cellspacing="0" cellpadding="0"><tr><td>
+                <![endif]-->
+                <div>
+                    <table border="0" cellpadding="0" cellspacing="0" class="table1000" style="max-width: 1000px;min-width:300px;" width="100%"><!--head-->
+                        <tbody><!--head END--><!--main -->
+                        <tr>
+                            <td align="center" valign="top"><!-- bg -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center" bgcolor="#f2f2f2"  valign="top"><br />
+                                            <!-- content -->
+                                            <table border="0" cellpadding="0" cellspacing="0" class="table620" style="max-width: 620px;min-width:300px;" width="100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="left" valign="top" width="10">
+                                                        <div style="height: 10px; line-height:10px; font-size:8px;"></div>
+                                                    </td>
+                                                    <td align="center" valign="top">
+                                                        <div style="height: 22px; line-height: 22px; font-size: 8px;"></div>
+                                                        <!-- Основной Блок - Баннер + заголовок + текст -->
+
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td align="center" bgcolor="#ffffff" style="border-radius: 3px; box-shadow: 0px 0px 26.97px 2.03px rgba(0, 0, 0, 0.16); overflow: hidden;" valign="top"><!-- creative -->
+
+                                                                    <table border="0" cellpadding="0" cellspacing="0" width="93%">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td align="left" valign="top" style="padding-top: 25px; padding-bottom: 25px;">
+
+
+                                                                                {% block content %}{% endblock %}
+
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- block END --></td>
+                                                    <td align="left" valign="top" width="10">
+                                                        <div style="height: 10px; line-height:10px; font-size:8px;"></div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- content END --></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!-- bg END --><!-- padding -->
+
+                                <div style="height: 30px; line-height: 30px; font-size: 8px;"></div>
+
+                                <table border="0" cellpadding="0" cellspacing="0" class="table620" style="max-width: 620px;min-width:300px;" width="100%">
+                                    <tbody>
+                                    <tr>
+                                        <td align="left" valign="top" width="10">
+                                            <div style="height: 10px; line-height:10px; font-size:8px;"></div>
+                                        </td>
+                                        <td align="center" valign="top"><span style="color:#4e5f70;"><!-- block --></span>
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="center" bgcolor="#ffffff" style="border-radius: 3px; box-shadow: 0px 0px 26.97px 2.03px rgba(0, 0, 0, 0.16); overflow: hidden;" valign="top">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="93%">
+                                                            <tbody>
+                                                            <tr>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="center" bgcolor="#ffffff" style="border-radius: 3px; box-shadow: 0px 0px 26.97px 2.03px rgba(0, 0, 0, 0.16); overflow: hidden;" valign="top">
+                                                        <table border="0" cellpadding="0" cellspacing="0" width="93%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td align="left" valign="top">
+                                                                    <div style="line-height: 24px;"></div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- btn-lg END --></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- block END -->
+
+                                            <div style="height: 76px; line-height: 76px; font-size: 8px;"></div>
+                                        </td>
+                                        <td align="left" valign="top" width="10">
+                                            <div style="height: 10px; line-height:10px; font-size:8px;"></div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!-- content END --></td>
+                        </tr>
+                        <!--main END-->
+                        </tbody>
+                    </table>
+                </div>
+                <!--[if (gte mso 9)|(IE)]>
+                </td></tr>
+                </table>
+                <![endif]--><!-- footer -->
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="margin:0px;padding:10px 0px 0px;text-align:center;font-size:11px;line-height:13px;color:rgb(51,51,51);">
+        Это сообщение отправлено автоматически. Пожалуйста не отвечайте на него.
+    </div>
+
+</body>
+
+{% endblock %}

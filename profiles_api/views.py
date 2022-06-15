@@ -6,11 +6,13 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from profiles_api import serializers
 from profiles_api.models import UserProfile, ProfileFeedItem
 from profiles_api.permissions import UpdateOwnProfile, UpdateOwnStatus
-from profiles_api.serializers import UserProfileSerializer, ProfileFeedItemSerializer
+from profiles_api.serializers import UserProfileSerializer, ProfileFeedItemSerializer, MyTokenObtainPairSerializer
 
 
 class HelloApiView(APIView):
@@ -93,7 +95,7 @@ class UserLoginApiView(ObtainAuthToken):
 
 
 class UserProfileFeedViewSet(ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication, )
     permission_classes = (
         UpdateOwnStatus,
         IsAuthenticatedOrReadOnly
@@ -103,3 +105,8 @@ class UserProfileFeedViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user_profile=self.request.user)
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    """JWT login views"""
+    serializer_class = MyTokenObtainPairSerializer

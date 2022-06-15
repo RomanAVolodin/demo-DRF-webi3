@@ -9,8 +9,14 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
+from datetime import timedelta
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_rest_passwordreset',
     'profiles_api',
 ]
 
@@ -118,3 +125,54 @@ AUTH_USER_MODEL = 'profiles_api.UserProfile'
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 #     'PAGE_SIZE': 3
 # }
+
+
+# https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {'user': '10000/day', 'anon': '10000/day'},
+    'DEFAULT_PAGINATION_CLASS': 'profiles_api.paginators.TotalPagesCountPaginator',
+    'PAGE_SIZE': 5,
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'id',
+}
+
+APPEND_SLASH = True
+
+
+DEFAULT_FROM_EMAIL = 'app@test.ru'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+else:
+    EMAIL_HOST = 'smtp.yandex.ru'
+    EMAIL_PORT = '587'
+    EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
+    EMAIL_HOST_PASSWORD = os.getenv('ADMIN_EMAIL_PASSWORD')
+    EMAIL_USE_TLS = True
+
+FRONT_URL = os.getenv('FRONT_HOST')
+
+# django_rest_passwordreset
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 1
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
+DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = True
