@@ -8,3 +8,5 @@ PyJWT==2.4.0
 python-dotenv==0.20.0
 pytz==2022.1
 sqlparse==0.4.2
+gunicorn
+psycopg2-binary

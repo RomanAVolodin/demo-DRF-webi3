@@ -1,12 +1,56 @@
 version: '3.7'
 
 services:
+  gateway:
+    image: rozarioagro/swarm-gateway:0.1
+
+    restart: always
+    volumes:
+      - static_volume:/code/static
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  api:
+    image: rozarioagro/swarm-django:0.1
+    restart: always
+    volumes:
+      - static_volume:/code/static
+    environment:
+      - MAILER_HOST=mailer
+      - MAILER_PORT=1025
+      - MAILER_USER=app
+      - MAILER_PASSWORD=secret
+      - MAILER_ENCRYPTION=tcp
+      - MAILER_FROM_EMAIL=mail@app.test
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=postgres
+      - POSTGRES_USER=cabinet_user
+      - POSTGRES_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=postgres
+      - POSTGRES_USER=cabinet_user
+      - POSTGRES_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+
   mailer:
     image: mailhog/mailhog
     ports:
       - "8025:8025"
-      - "1025:1025"
 
 
 volumes:
   postgres_data:
+  static_volume:

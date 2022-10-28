@@ -1,3 +1,5 @@
+import socket
+
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -17,13 +19,16 @@ from profiles_api.serializers import UserProfileSerializer, ProfileFeedItemSeria
 
 class HelloApiView(APIView):
     serializer_class = serializers.HelloSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request, format=None):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        my_ip = s.getsockname()[0]
+        s.close()
+
         an_apiview = [
-            'Uses HTTP methods',
-            'Is similar to traditional Django view',
-            'Gives you the most control over your app logic',
-            'Is mapped manually to URLs',
+            f'Server ip is: {my_ip}\n',
         ]
 
         return Response({'message': 'Hello', 'an_apiview': an_apiview})
@@ -95,7 +100,7 @@ class UserLoginApiView(ObtainAuthToken):
 
 
 class UserProfileFeedViewSet(ModelViewSet):
-    authentication_classes = (TokenAuthentication, )
+    authentication_classes = (TokenAuthentication, JWTAuthentication)
     permission_classes = (
         UpdateOwnStatus,
         IsAuthenticatedOrReadOnly

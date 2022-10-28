@@ -2,7 +2,9 @@ version: '3.7'
 
 services:
   gateway:
-    image: rozarioagro/swarm-gateway:0.1
+    build:
+      context: docker/nginx
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - static_volume:/code/static
@@ -17,32 +19,21 @@ services:
       dockerfile: docker/api/Dockerfile
     restart: always
     volumes:
+      - ./:/code
       - static_volume:/code/static
     environment:
-      - DEBUG=1
-      - SECRET_KEY=foo
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1] *
-      - SQL_ENGINE=django.db.backends.postgresql
-      - SQL_DATABASE=cabinet
-      - SQL_USER=cabinet_user
-      - SQL_PASSWORD=hello_django
-      - SQL_HOST=db
-      - SQL_PORT=5432
-      - DATABASE=postgres
-      - ADMIN_EMAIL=admin@system.dev
-      - API_HOST=http://localhost:8888/
-      - API_URL=http://localhost/api/v1/
-      - FRONT_HOST=http://localhost:8080/
-      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
-      - RABBITMQ_DEFAULT_USER=rabbit
-      - RABBITMQ_DEFAULT_PASS=rabbit
-      - DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
       - MAILER_HOST=mailer
       - MAILER_PORT=1025
       - MAILER_USER=app
       - MAILER_PASSWORD=secret
       - MAILER_ENCRYPTION=tcp
       - MAILER_FROM_EMAIL=mail@app.test
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=postgres
+      - POSTGRES_USER=cabinet_user
+      - POSTGRES_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
     depends_on:
       - db
 
@@ -51,9 +42,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=postgres
       - POSTGRES_USER=cabinet_user
-      - POSTGRES_DB=cabinet
-
+      - POSTGRES_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
 
   mailer:
     image: mailhog/mailhog

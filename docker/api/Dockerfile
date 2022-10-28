@@ -1,6 +1,6 @@
 FROM --platform=linux/amd64 python:3.10.2-buster
 
-WORKDIR /usr/src/app
+WORKDIR /code
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -16,6 +16,8 @@ COPY ./requirements.txt ./
 
 RUN pip install -r ./requirements.txt
 
-COPY ./entrypoint.sh /root/entrypoint.sh
+COPY ./docker/api/entrypoint.sh /root/entrypoint.sh
+
+COPY . .
 
 ENTRYPOINT ["/root/entrypoint.sh"]
