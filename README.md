@@ -1,5 +1,6 @@
 # demo-DRF-webi3
 
+### Старт приложения в dev режиме `make start_app`
 
 ### `docker compose -f docker-compose.dev.yaml up -d ` 
 
