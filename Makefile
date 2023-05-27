@@ -1,3 +1,9 @@
+start_app:
+	docker compose -f docker-compose.dev.yaml up -d
+
+stop-app:
+	docker compose -f docker-compose.dev.yaml down
+
 django-migrate:
 	python manage.py migrate
 
