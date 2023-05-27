@@ -24,6 +24,20 @@ class UserProfileSerializer(ModelSerializer):
         return user
 
 
+class ProfileFeedItemSerializerShort(ModelSerializer):
+    class Meta:
+        model = ProfileFeedItem
+        fields = ('id', 'status_text', 'created_on')
+
+
+class UserProfileDetailedSerializer(ModelSerializer):
+    feeds = ProfileFeedItemSerializerShort(many=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'email', 'name', 'feeds')
+
+
 class ProfileFeedItemSerializer(ModelSerializer):
     """Serializes ProfileFeedItem model"""
     # user_profile = UserProfileSerializer()

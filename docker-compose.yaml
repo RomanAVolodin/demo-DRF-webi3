@@ -3,7 +3,6 @@ version: '3.7'
 services:
   gateway:
     image: rozarioagro/swarm-gateway:0.1
-
     restart: always
     volumes:
       - static_volume:/code/static

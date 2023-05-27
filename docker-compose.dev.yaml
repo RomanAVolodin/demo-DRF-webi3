@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - static_volume:/code/static
+      - static_volume:/code/static:ro
     ports:
       - "80:80"
     depends_on:

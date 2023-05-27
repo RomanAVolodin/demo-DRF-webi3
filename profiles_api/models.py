@@ -55,6 +55,7 @@ class ProfileFeedItem(models.Model):
     user_profile = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name='feeds'
     )
     status_text = models.CharField(max_length=255)
     created_on = models.DateTimeField(auto_now_add=True)

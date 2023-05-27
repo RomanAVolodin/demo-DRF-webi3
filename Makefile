@@ -1,5 +1,5 @@
 django-migrate:
-	./manage.py migrate
+	python manage.py migrate
 
 start:
 	./manage.py runserver

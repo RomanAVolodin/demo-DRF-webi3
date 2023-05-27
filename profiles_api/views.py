@@ -1,6 +1,9 @@
 import socket
 
+from django_filters import DateTimeFilter
+from django_filters.rest_framework import FilterSet, DjangoFilterBackend
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, filters
@@ -14,7 +17,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from profiles_api import serializers
 from profiles_api.models import UserProfile, ProfileFeedItem
 from profiles_api.permissions import UpdateOwnProfile, UpdateOwnStatus
-from profiles_api.serializers import UserProfileSerializer, ProfileFeedItemSerializer, MyTokenObtainPairSerializer
+from profiles_api.serializers import UserProfileSerializer, ProfileFeedItemSerializer, MyTokenObtainPairSerializer, UserProfileDetailedSerializer
 
 
 class HelloApiView(APIView):
@@ -93,6 +96,18 @@ class UserProfileViewSet(ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('name', 'email')
     ordering_fields = ('name', 'email')
+
+
+class FeedDateFilter(FilterSet):
+    from_datetime = DateTimeFilter(field_name='feeds__created_on', lookup_expr='gte', distinct=True)
+    to_datetime = DateTimeFilter(field_name='feeds__created_on', lookup_expr='lte', distinct=True)
+
+
+class UserProfileDetailedListView(ListAPIView):
+    serializer_class = UserProfileDetailedSerializer
+    queryset = UserProfile.objects.prefetch_related('feeds').order_by('id').all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = FeedDateFilter
 
 
 class UserLoginApiView(ObtainAuthToken):

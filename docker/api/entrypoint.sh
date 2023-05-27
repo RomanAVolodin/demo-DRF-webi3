@@ -15,6 +15,6 @@ DJANGO_SUPERUSER_USERNAME=admin \
 	DJANGO_SUPERUSER_EMAIL=mail@mail.ru \
 	python manage.py createsuperuser --noinput --name=Adminko || true
 
-gunicorn profiles.wsgi:application --bind 0.0.0.0:8000
+gunicorn profiles.wsgi:application --bind 0.0.0.0:8000 --reload
 
 exec "$@"
