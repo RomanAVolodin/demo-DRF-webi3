@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'request_logging.middleware.LoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'profiles.urls'
@@ -189,22 +190,17 @@ DJANGO_REST_MULTITOKENAUTH_REQUIRE_USABLE_PASSWORD = True
 
 LOGGING = {
     'version': 1,
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
-    },
+    'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-        }
+        },
     },
     'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
+        'django.request': {
             'handlers': ['console'],
-        }
-    }
+            'level': 'DEBUG',  # change debug level as appropiate
+            'propagate': False,
+        },
+    },
 }

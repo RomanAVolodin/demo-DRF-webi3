@@ -3,11 +3,11 @@ version: '3.7'
 services:
   gateway:
     build:
-      context: docker/nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: docker/nginx/Dockerfile
     restart: always
-    volumes:
-      - static_volume:/code/static:ro
+#    volumes:
+#      - static_volume:/code/static:ro
     ports:
       - "80:80"
     depends_on:
@@ -20,7 +20,7 @@ services:
     restart: always
     volumes:
       - ./:/code
-      - static_volume:/code/static
+#      - static_volume:/code/static
     environment:
       - MAILER_HOST=mailer
       - MAILER_PORT=1025
@@ -50,6 +50,7 @@ services:
       - DB_PORT=5432
 
   mailer:
+    platform: linux/amd64
     image: mailhog/mailhog
     ports:
       - "8025:8025"
@@ -58,4 +59,4 @@ services:
 
 volumes:
   postgres_data:
-  static_volume:
+#  static_volume:

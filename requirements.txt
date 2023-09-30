@@ -10,3 +10,4 @@ pytz==2022.1
 sqlparse==0.4.2
 gunicorn
 psycopg2-binary
+django-request-logging
